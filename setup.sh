@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Strict mode: exit on error, undefined variable, or pipe failure
-set -euox pipefail
+set -euo pipefail
 
 # Color codes for output
 GREEN='\033[0;32m'
@@ -61,7 +61,9 @@ setup_python_env() {
 setup_docker_env() {
     log "Preparing Docker environment..."
     
+    
     # Create database volume directory if not exists
+    rm -rf ${DB_VOLUME_PATH}
     mkdir -p ${DB_VOLUME_PATH}
     
     # Pull Docker image
@@ -95,6 +97,7 @@ initialize_database() {
     cp database/6a8ba9d16583414f9abce56141502022_9.parquet db/
     cp database/init.sql db/
     docker exec -it duckdb_server sh -c "/duckdb /db/vehicle_data.db < /db/init.sql"
+    docker exec -it duckdb_server sh -c "chmod 777 /db/vehicle_data.db"
 }
 
 # Main setup function
@@ -110,3 +113,34 @@ main() {
 
 # Run main setup
 main
+
+
+
+
+# Variable to track overall test success
+TESTS_PASSED=true
+
+# Directory containing test files
+TEST_DIR="tests"
+
+# Run each Python test file
+for test_file in ${TEST_DIR}/*.py; do
+    echo "Running test: $test_file"
+    
+    # Run the test and capture the exit code
+    if python3 "$test_file"; then
+        echo "✅ $test_file PASSED"
+    else
+        echo "❌ $test_file FAILED"
+        TESTS_PASSED=false
+    fi
+done
+
+# Determine final exit code based on test results
+if [ "$TESTS_PASSED" = true ]; then
+    echo "All tests passed successfully! 🎉"
+    exit 0
+else
+    echo "Some tests failed. Please review test results. ❌"
+    exit 1
+fi
