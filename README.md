@@ -1,3 +1,4 @@
+```
 duckdb-query-project/
 .
 ├── config
@@ -44,7 +45,7 @@ duckdb-query-project/
 └── tests
     ├── connection_test.py
     └── validation_test.py
-
+```
 
 
 
@@ -63,7 +64,7 @@ A robust, modular Python project for executing queries against DuckDB databases.
 ## Installation
 1. Clone the repository
 2. Create a virtual environment
-3. Install dependencies: ```bash 
+3. Install dependencies: ```bash
                         ./setup.sh
                         ```
 
