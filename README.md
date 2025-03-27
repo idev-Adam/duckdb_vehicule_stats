@@ -63,18 +63,45 @@ A robust, modular Python project for executing queries against DuckDB databases.
 ## Installation
 1. Clone the repository
 2. Create a virtual environment
-3. Install dependencies: `pip install -r requirements.txt`
-4. Install the package: `pip install -e .`
+3. Install dependencies: `bash setup.sh`
 
 ## Usage
 ```python
 from src.database.connection import DatabaseConnection
 from src.database.queries import QueryManager
+from src.controllers.vehicle_controllers import VehicleControllers
 
 # Establish connection
 db_connection = DatabaseConnection('your_database.db')
 query_manager = QueryManager(db_connection)
 
-# Execute query
-result = query_manager.execute_custom_query("SELECT * FROM your_table")
-print(result.data)
+
+# Initialize vehicle controllers
+vehicle_controller = VehicleControllers(query_manager=query_manager)
+
+# Scenario 1: get all results
+vehicle_stats:QueryResult = vehicle_controller.get_vehicle_detection_stats(requests={})
+
+# Print full range statistics
+print("\nData:")
+print(vehicle_stats.data.to_string(index=False))
+print("\nMetadata:")
+print(vehicle_stats.metadata)
+
+
+# Scenario 2: Car-specific statistics with limited distance range
+vehicle_stats_car = vehicle_controller.get_vehicle_detection_stats(requests={
+    "distance_range": (20, 80),
+    "distance_intervals": [
+        (1, 10), (11, 20), (21, 30), (31, 40), 
+        (41, 50),  (61, 70), (71, 80), 
+        (81, 90), (91, 100)
+    ],
+    "vehicle_type": "car"  # Valid Enum Value$
+})
+
+# Print car-specific statistics
+print("\nData:")
+print(vehicle_stats_car.data.to_string(index=False))
+print("\nMetadata:")
+print(vehicle_stats_car.metadata)
