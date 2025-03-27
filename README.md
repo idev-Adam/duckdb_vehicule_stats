@@ -83,7 +83,7 @@ query_manager = QueryManager(db_connection)
 vehicle_controller = VehicleControllers(query_manager=query_manager)
 
 # Scenario 1: get all results
-vehicle_stats:QueryResult = vehicle_controller.get_vehicle_detection_stats(requests={})
+vehicle_stats = vehicle_controller.get_vehicle_detection_stats(requests={})
 
 # Print full range statistics
 print("\nData:")

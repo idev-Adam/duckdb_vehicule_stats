@@ -82,7 +82,7 @@ def main():
 
 
         # Scenario 2: Car-specific statistics with limited distance range
-        vehicle_stats_car = vehicle_controller.get_vehicle_detection_stats(requests={
+        vehicle_stats_car:QueryResult = vehicle_controller.get_vehicle_detection_stats(requests={
             "distance_range": (20, 80),
             "distance_intervals": [
                 (1, 10), (11, 20), (21, 30), (31, 40), 
