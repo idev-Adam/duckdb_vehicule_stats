@@ -63,7 +63,7 @@ A robust, modular Python project for executing queries against DuckDB databases.
 ## Installation
 1. Clone the repository
 2. Create a virtual environment
-3. Install dependencies: `bash setup.sh`
+3. Install dependencies: ```bash ./setup.sh```
 
 ## Usage
 ```python

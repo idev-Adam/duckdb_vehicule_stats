@@ -12,7 +12,7 @@ sqlalchemy==2.0.21  # Optional: For advanced database interactions
 - Python 3.9+
 
 ## Environment Setup
-1. Install Python dependencies:
+1. Install Python packages and run docker container:
    ```bash
-   pip install -r requirements.txt
+   ./setup.sh
    ```
