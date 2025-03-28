@@ -67,6 +67,50 @@ A robust, modular Python project for executing queries against DuckDB databases.
 3. Install dependencies: ```bash
                         ./setup.sh
                         ```
+## TODO:
+### Setup
+- [ ] Add an HTTP server (Apache, Flask, etc.)
+
+### Features
+- [ ] Add a data converter (Parquet, JSON, etc.)
+- [ ] Implement pagination for data/results
+- [ ] Add sorting functionality
+
+## Adding a New Query Filter
+To add a new query filter in the project, follow these steps:
+
+### 1. Define the Filter in Vehicle Validation
+Edit `src/validations/vehicle_validations.py`:
+- In the `VehicleValidation` class, create a new property following Pydantic validation rules.
+
+Example:
+```python
+from pydantic import BaseModel, Field
+
+class VehicleValidation(BaseModel):
+    max_distance: int = Field(..., gt=0, description="Maximum allowed distance")
+```
+
+### 2. Pass the Filter in Controller Requests
+Ensure the filter is included in the request dictionary when handling queries.
+
+Example:
+```python
+filter_params = {"max_distance": 123}
+```
+
+### 3. Handle the Filter in Vehicle Repository
+Modify `src/repository/vehicle_repository.py` to process the new filter:
+- Add the condition to the query
+- Append the corresponding parameter value
+
+Example:
+```python
+if params.max_distance:
+    conditions.append("distance < ?")
+    query_params.append(params.max_distance)
+```
+
 
 ## Usage
 ```python
