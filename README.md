@@ -75,6 +75,8 @@ A robust, modular Python project for executing queries against DuckDB databases.
 - [ ] Add a data converter (Parquet, JSON, etc.)
 - [ ] Implement pagination for data/results
 - [ ] Add sorting functionality
+- [ ] Add Cache
+- [ ] Add Index to the database
 
 ## Adding a New Query Filter
 To add a new query filter in the project, follow these steps:
